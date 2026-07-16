@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'accounts',
      'departments',
      'faculties',
+     'programs',
+     'courses',
 ]
 
 'rest_framework',
