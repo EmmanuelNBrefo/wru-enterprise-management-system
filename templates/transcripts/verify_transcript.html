@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Transcript Verification |
+    Western Region University of Liberia
+</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+
+        margin: 0;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        background: #f1f5f9;
+
+        color: #1e293b;
+
+    }
+
+    .container {
+
+        width: 100%;
+
+        max-width: 900px;
+
+        margin: 0 auto;
+
+        padding: 30px 20px;
+
+    }
+
+    .header {
+
+        background: #0f172a;
+
+        color: white;
+
+        padding: 35px 20px;
+
+        text-align: center;
+
+        border-radius: 12px 12px 0 0;
+
+    }
+
+    .header h1 {
+
+        margin: 0;
+
+        font-size: 28px;
+
+    }
+
+    .header p {
+
+        margin: 8px 0 0;
+
+        color: #cbd5e1;
+
+    }
+
+    .card {
+
+        background: white;
+
+        padding: 30px;
+
+        border-radius: 0 0 12px 12px;
+
+        box-shadow:
+            0 8px 25px
+            rgba(
+                0,
+                0,
+                0,
+                0.08
+            );
+
+    }
+
+    .search-box {
+
+        background: #f8fafc;
+
+        border: 1px solid #e2e8f0;
+
+        padding: 25px;
+
+        border-radius: 10px;
+
+        margin-bottom: 25px;
+
+    }
+
+    .search-box h2 {
+
+        margin-top: 0;
+
+        color: #0f172a;
+
+    }
+
+    .search-form {
+
+        display: flex;
+
+        gap: 10px;
+
+    }
+
+    .search-form input {
+
+        flex: 1;
+
+        padding: 14px;
+
+        border: 1px solid #cbd5e1;
+
+        border-radius: 7px;
+
+        font-size: 16px;
+
+        font-family: monospace;
+
+    }
+
+    .search-form button {
+
+        padding: 14px 25px;
+
+        border: none;
+
+        border-radius: 7px;
+
+        background: #1d4ed8;
+
+        color: white;
+
+        font-size: 16px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+    }
+
+    .search-form button:hover {
+
+        background: #1e40af;
+
+    }
+
+    .status {
+
+        text-align: center;
+
+        padding: 20px;
+
+        border-radius: 10px;
+
+        margin-bottom: 25px;
+
+    }
+
+    .valid {
+
+        background: #dcfce7;
+
+        color: #166534;
+
+        border: 1px solid #86efac;
+
+    }
+
+    .pending {
+
+        background: #fef9c3;
+
+        color: #854d0e;
+
+        border: 1px solid #fde047;
+
+    }
+
+    .revoked {
+
+        background: #fee2e2;
+
+        color: #991b1b;
+
+        border: 1px solid #fca5a5;
+
+    }
+
+    .expired {
+
+        background: #ffedd5;
+
+        color: #9a3412;
+
+        border: 1px solid #fdba74;
+
+    }
+
+    .invalid {
+
+        background: #fee2e2;
+
+        color: #991b1b;
+
+        border: 1px solid #fca5a5;
+
+    }
+
+    .status h2 {
+
+        margin: 0 0 8px;
+
+    }
+
+    .verification-code {
+
+        font-family: monospace;
+
+        font-size: 18px;
+
+        font-weight: bold;
+
+        letter-spacing: 1px;
+
+        margin-top: 10px;
+
+    }
+
+    .section {
+
+        margin-top: 30px;
+
+    }
+
+    .section h3 {
+
+        border-bottom: 2px solid #e2e8f0;
+
+        padding-bottom: 10px;
+
+        margin-bottom: 18px;
+
+        color: #0f172a;
+
+    }
+
+    .grid {
+
+        display: grid;
+
+        grid-template-columns:
+
+            repeat(
+
+                auto-fit,
+
+                minmax(
+
+                    220px,
+
+                    1fr
+
+                )
+
+            );
+
+        gap: 15px;
+
+    }
+
+    .info-box {
+
+        background: #f8fafc;
+
+        border: 1px solid #e2e8f0;
+
+        padding: 15px;
+
+        border-radius: 8px;
+
+    }
+
+    .label {
+
+        display: block;
+
+        font-size: 12px;
+
+        color: #64748b;
+
+        text-transform: uppercase;
+
+        margin-bottom: 5px;
+
+    }
+
+    .value {
+
+        font-size: 16px;
+
+        font-weight: bold;
+
+        color: #0f172a;
+
+    }
+
+    .gpa-box {
+
+        background: #eff6ff;
+
+        border: 1px solid #bfdbfe;
+
+        text-align: center;
+
+        padding: 25px;
+
+        border-radius: 10px;
+
+    }
+
+    .gpa {
+
+        font-size: 42px;
+
+        font-weight: bold;
+
+        color: #1d4ed8;
+
+    }
+
+    .standing {
+
+        font-size: 18px;
+
+        font-weight: bold;
+
+        color: #166534;
+
+    }
+
+    .footer {
+
+        text-align: center;
+
+        margin-top: 25px;
+
+        color: #64748b;
+
+        font-size: 13px;
+
+    }
+
+    @media (max-width: 600px) {
+
+        .container {
+
+            padding: 15px;
+
+        }
+
+        .card {
+
+            padding: 20px;
+
+        }
+
+        .header h1 {
+
+            font-size: 22px;
+
+        }
+
+        .search-form {
+
+            flex-direction: column;
+
+        }
+
+        .search-form button {
+
+            width: 100%;
+
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="container">
+
+    <div class="header">
+
+        <h1>
+
+            WESTERN REGION UNIVERSITY OF LIBERIA
+
+        </h1>
+
+        <p>
+
+            Official Transcript Verification Portal
+
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <!-- SEARCH FORM -->
+
+        <div class="search-box">
+
+            <h2>
+
+                Verify a Transcript
+
+            </h2>
+
+            <p>
+
+                Enter the verification code printed
+
+                on the official transcript or scan
+
+                the QR code.
+
+            </p>
+
+            <form
+
+                method="get"
+
+                action=""
+
+                class="search-form"
+
+            >
+
+                <input
+
+                    type="text"
+
+                    name="verification_code"
+
+                    placeholder="Example: WRU-TR-1192480E73BA"
+
+                    value="{{ verification_code }}"
+
+                    required
+
+                >
+
+                <button
+
+                    type="submit"
+
+                >
+
+                    Verify Transcript
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        {% if verification_code %}
+
+            <!-- VALID -->
+
+            {% if verification_status == "VALID" %}
+
+                <div class="status valid">
+
+                    <h2>
+
+                        ✓ VALID OFFICIAL TRANSCRIPT
+
+                    </h2>
+
+                    <p>
+
+                        This transcript has been successfully
+
+                        verified in the university records.
+
+                    </p>
+
+                    <div class="verification-code">
+
+                        {{ verification_code }}
+
+                    </div>
+
+                </div>
+
+
+            <!-- PENDING -->
+
+            {% elif verification_status == "PENDING" %}
+
+                <div class="status pending">
+
+                    <h2>
+
+                        ⏳ TRANSCRIPT PENDING VERIFICATION
+
+                    </h2>
+
+                    <p>
+
+                        This transcript exists in the university
+
+                        records but has not yet been officially
+
+                        activated.
+
+                    </p>
+
+                    <div class="verification-code">
+
+                        {{ verification_code }}
+
+                    </div>
+
+                </div>
+
+
+            <!-- REVOKED -->
+
+            {% elif verification_status == "REVOKED" %}
+
+                <div class="status revoked">
+
+                    <h2>
+
+                        ✕ TRANSCRIPT REVOKED
+
+                    </h2>
+
+                    <p>
+
+                        This transcript has been revoked and
+
+                        should not be accepted as a valid
+
+                        official academic record.
+
+                    </p>
+
+                    <div class="verification-code">
+
+                        {{ verification_code }}
+
+                    </div>
+
+                </div>
+
+
+            <!-- EXPIRED -->
+
+            {% elif verification_status == "EXPIRED" %}
+
+                <div class="status expired">
+
+                    <h2>
+
+                        ⚠ TRANSCRIPT EXPIRED
+
+                    </h2>
+
+                    <p>
+
+                        This transcript is no longer valid
+
+                        for verification.
+
+                    </p>
+
+                    <div class="verification-code">
+
+                        {{ verification_code }}
+
+                    </div>
+
+                </div>
+
+
+            <!-- NOT FOUND OR INVALID -->
+
+            {% else %}
+
+                <div class="status invalid">
+
+                    <h2>
+
+                        ✕ INVALID VERIFICATION CODE
+
+                    </h2>
+
+                    <p>
+
+                        No valid transcript was found
+
+                        with the verification code provided.
+
+                    </p>
+
+                    <div class="verification-code">
+
+                        {{ verification_code }}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- SHOW DETAILS WHEN TRANSCRIPT EXISTS -->
+
+            {% if transcript %}
+
+                <div class="section">
+
+                    <h3>
+
+                        Student Information
+
+                    </h3>
+
+                    <div class="grid">
+
+                        <div class="info-box">
+
+                            <span class="label">
+
+                                Student Name
+
+                            </span>
+
+                            <span class="value">
+
+                                {{ student }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="info-box">
+
+                            <span class="label">
+
+                                Student ID
+
+                            </span>
+
+                            <span class="value">
+
+                                {{ student.student_id }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="info-box">
+
+                            <span class="label">
+
+                                Transcript Type
+
+                            </span>
+
+                            <span class="value">
+
+                                {{ transcript.transcript_type }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="info-box">
+
+                            <span class="label">
+
+                                Status
+
+                            </span>
+
+                            <span class="value">
+
+                                {{ transcript.get_status_display }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="info-box">
+
+                            <span class="label">
+
+                                Generated Date
+
+                            </span>
+
+                            <span class="value">
+
+                                {{ transcript.generated_at|date:"F d, Y" }}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {% if summary %}
+
+                    <div class="section">
+
+                        <h3>
+
+                            Academic Summary
+
+                        </h3>
+
+                        <div class="grid">
+
+                            <div class="gpa-box">
+
+                                <div class="label">
+
+                                    Cumulative GPA
+
+                                </div>
+
+                                <div class="gpa">
+
+                                    {{ summary.cumulative_gpa.gpa }}
+
+                                </div>
+
+                                <div>
+
+                                    Out of 4.00
+
+                                </div>
+
+                            </div>
+
+                            <div class="gpa-box">
+
+                                <div class="label">
+
+                                    Academic Standing
+
+                                </div>
+
+                                <div class="standing">
+
+                                    {{ summary.academic_standing }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="section">
+
+                        <h3>
+
+                            Transcript Statistics
+
+                        </h3>
+
+                        <div class="grid">
+
+                            <div class="info-box">
+
+                                <span class="label">
+
+                                    Total Credit Hours
+
+                                </span>
+
+                                <span class="value">
+
+                                    {{ summary.cumulative_gpa.total_credit_hours }}
+
+                                </span>
+
+                            </div>
+
+                            <div class="info-box">
+
+                                <span class="label">
+
+                                    Total Quality Points
+
+                                </span>
+
+                                <span class="value">
+
+                                    {{ summary.cumulative_gpa.total_quality_points }}
+
+                                </span>
+
+                            </div>
+
+                            <div class="info-box">
+
+                                <span class="label">
+
+                                    Courses Completed
+
+                                </span>
+
+                                <span class="value">
+
+                                    {{ summary.academic_records|length }}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+    <div class="footer">
+
+        <p>
+
+            Western Region University of Liberia
+
+        </p>
+
+        <p>
+
+            Official Academic Records Verification System
+
+        </p>
+
+    </div>
+
+</div>
+```
+
+</body>
+
+</html>

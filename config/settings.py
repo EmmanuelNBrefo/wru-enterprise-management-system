@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+     "rest_framework",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,18 +39,29 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
       # Local Apps
+
+      "corsheaders",
+
+
     'accounts',
      'departments',
      'faculties',
      'programs',
      'courses',
      'students',
+     'registrations',
+     'results',
+     'grading',
+     'gpa',
+     "transcripts",
 ]
+
 
 'rest_framework',
 'apps.accounts',
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,7 +76,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+    BASE_DIR / 'templates',
+],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,3 +145,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
     
 ];
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+CORS_ALLOW_CREDENTIALS = True

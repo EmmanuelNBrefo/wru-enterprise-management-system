@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<div class="no-print" style="text-align: center; margin-bottom: 20px;">
+
+    <a
+        href="{% url 'transcripts:pdf' report.transcript.id %}"
+        style="
+            display: inline-block;
+            padding: 12px 20px;
+            background: #1f4e79;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        "
+    >
+        Download PDF Transcript
+    </a>
+
+</div>
+```
+<title>Academic Transcript</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 30px;
+        background: #f2f4f7;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #222;
+    }
+
+    .transcript-container {
+        max-width: 1000px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+    }
+
+    .header {
+        text-align: center;
+        border-bottom: 3px solid #1f4e79;
+        padding-bottom: 20px;
+        margin-bottom: 25px;
+    }
+
+    .header h1 {
+        margin: 0;
+        color: #1f4e79;
+        font-size: 28px;
+    }
+
+    .header h2 {
+        margin: 8px 0;
+        font-size: 20px;
+    }
+
+    .header p {
+        margin: 5px 0;
+        color: #555;
+    }
+
+    .student-information {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 30px;
+        margin-bottom: 30px;
+        padding: 18px;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+    }
+
+    .student-information p {
+        margin: 5px 0;
+    }
+
+    .section-title {
+        margin-top: 25px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background: #1f4e79;
+        color: white;
+        font-weight: bold;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 25px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background: #e9eef3;
+        font-weight: bold;
+    }
+
+    td.center,
+    th.center {
+        text-align: center;
+    }
+
+    .gpa-summary {
+        width: 100%;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+    }
+
+    .gpa-summary td {
+        font-weight: bold;
+    }
+
+    .footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #ccc;
+        text-align: center;
+        color: #666;
+        font-size: 13px;
+    }
+
+    .official-badge {
+        display: inline-block;
+        padding: 6px 14px;
+        margin-top: 10px;
+        border: 1px solid #1f4e79;
+        color: #1f4e79;
+        font-weight: bold;
+        border-radius: 4px;
+    }
+
+    @media print {
+        body {
+            background: white;
+            padding: 0;
+        }
+
+        .transcript-container {
+            max-width: 100%;
+            box-shadow: none;
+            padding: 20px;
+        }
+
+        .no-print {
+            display: none;
+        }
+    }
+
+    @media (max-width: 700px) {
+        body {
+            padding: 10px;
+        }
+
+        .transcript-container {
+            padding: 20px;
+        }
+
+        .student-information {
+            grid-template-columns: 1fr;
+        }
+
+        table {
+            font-size: 12px;
+        }
+
+        th,
+        td {
+            padding: 6px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="transcript-container">
+
+    <!-- UNIVERSITY HEADER -->
+    <div class="header">
+
+        <h1>
+            WESTERN REGION UNIVERSITY
+        </h1>
+
+        <h2>
+            ACADEMIC TRANSCRIPT
+        </h2>
+
+        <p>
+            Western Region University of Liberia
+        </p>
+
+        {% if report.transcript.is_official %}
+            <div class="official-badge">
+                OFFICIAL TRANSCRIPT
+            </div>
+        {% else %}
+            <div class="official-badge">
+                UNOFFICIAL TRANSCRIPT
+            </div>
+        {% endif %}
+
+    </div>
+
+
+    <!-- STUDENT INFORMATION -->
+    <div class="section-title">
+        STUDENT INFORMATION
+    </div>
+
+    <div class="student-information">
+
+        <p>
+            <strong>Student ID:</strong>
+            {{ report.student.student_id }}
+        </p>
+
+        <p>
+            <strong>Student Name:</strong>
+            {{ report.student.first_name }}
+            {{ report.student.middle_name }}
+            {{ report.student.last_name }}
+        </p>
+
+        <p>
+            <strong>Program:</strong>
+            {{ report.student.program }}
+        </p>
+
+        <p>
+            <strong>Department:</strong>
+            {{ report.student.department }}
+        </p>
+
+    </div>
+
+
+    <!-- ACADEMIC RECORDS -->
+    <div class="section-title">
+        ACADEMIC RECORDS
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Academic Year
+                </th>
+
+                <th>
+                    Semester
+                </th>
+
+                <th>
+                    Course Code
+                </th>
+
+                <th>
+                    Course Title
+                </th>
+
+                <th class="center">
+                    Credit Hours
+                </th>
+
+                <th class="center">
+                    Score
+                </th>
+
+                <th class="center">
+                    Grade
+                </th>
+
+                <th class="center">
+                    Grade Point
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for record in report.academic_records %}
+
+                <tr>
+
+                    <td>
+                        {{ record.academic_year }}
+                    </td>
+
+                    <td>
+                        {{ record.semester }}
+                    </td>
+
+                    <td>
+                        {{ record.course_code }}
+                    </td>
+
+                    <td>
+                        {{ record.course_title }}
+                    </td>
+
+                    <td class="center">
+                        {{ record.credit_hours }}
+                    </td>
+
+                    <td class="center">
+                        {{ record.score }}
+                    </td>
+
+                    <td class="center">
+                        {{ record.grade }}
+                    </td>
+
+                    <td class="center">
+                        {{ record.grade_point }}
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+
+                    <td colspan="8" class="center">
+                        No academic records available.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+    <!-- GPA SUMMARY -->
+    <div class="section-title">
+        CUMULATIVE GPA SUMMARY
+    </div>
+
+    <table class="gpa-summary">
+
+        <tr>
+
+            <td>
+                Total Credit Hours
+            </td>
+
+            <td>
+                {{ report.cumulative_gpa.total_credit_hours }}
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                Total Quality Points
+            </td>
+
+            <td>
+                {{ report.cumulative_gpa.total_quality_points }}
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                Cumulative GPA
+            </td>
+
+            <td>
+                {{ report.cumulative_gpa.gpa }}
+            </td>
+
+        </tr>
+
+    </table>
+
+
+    <!-- TRANSCRIPT DETAILS -->
+    <div class="section-title">
+        TRANSCRIPT DETAILS
+    </div>
+
+    <table>
+
+        <tr>
+
+            <td>
+                <strong>Transcript Type</strong>
+            </td>
+
+            <td>
+                {{ report.transcript.transcript_type }}
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <strong>Date Generated</strong>
+            </td>
+
+            <td>
+                {{ report.transcript.generated_at|date:"F d, Y" }}
+            </td>
+
+        </tr>
+
+    </table>
+
+
+    {% if report.transcript.notes %}
+
+        <div class="section-title">
+            NOTES
+        </div>
+
+        <p>
+            {{ report.transcript.notes }}
+        </p>
+
+    {% endif %}
+
+
+    <!-- FOOTER -->
+    <div class="footer">
+
+        <p>
+            This transcript is generated by the
+            Western Region University Enterprise Management System.
+        </p>
+
+        <p>
+            WRU-EMS
+        </p>
+
+    </div>
+
+</div>
+```
+
+</body>
+</html>
