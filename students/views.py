@@ -67,20 +67,28 @@ def student_detail(request, student_id):
     # UPDATE
     # --------------------
     if request.method == "PUT":
-        serializer = StudentCreateSerializer(
-            student,
-            data=request.data
-        )
+        print("REQUEST DATA:")
+    print(request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+    serializer = StudentCreateSerializer(
+        student,
+        data=request.data,
+        partial=True,
+    )
+
+    if serializer.is_valid():
+        serializer.save()
 
         return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
+            StudentSerializer(student).data
         )
+    print(serializer.errors)
 
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST
+    )
+    
     # --------------------
     # DELETE
     # --------------------

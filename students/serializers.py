@@ -41,6 +41,9 @@ class StudentSerializer(serializers.ModelSerializer):
         ]
 
     def get_name(self, obj):
+        if obj.middle_name:
+            return f"{obj.first_name} {obj.middle_name} {obj.last_name}"
+
         return f"{obj.first_name} {obj.last_name}"
 
 
