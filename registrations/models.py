@@ -1,75 +1,71 @@
 from django.db import models
+
 from students.models import Student
-from courses.models import Course
 
 
 class Registration(models.Model):
 
-    SEMESTER_CHOICES = (
-        ("FIRST", "First Semester"),
-        ("SECOND", "Second Semester"),
-    )
-
-    STATUS_CHOICES = (
-        ("REGISTERED", "Registered"),
-        ("DROPPED", "Dropped"),
+    STATUS_CHOICES = [
+        ("PENDING", "Pending"),
         ("COMPLETED", "Completed"),
+        ("CANCELLED", "Cancelled"),
+    ]
+
+    registration_no = models.CharField(
+        max_length=30,
+        unique=True,
+        blank=True
     )
 
     student = models.ForeignKey(
         Student,
-        on_delete=models.PROTECT,
-        related_name="registrations"
-    )
-
-    course = models.ForeignKey(
-        Course,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="registrations"
     )
 
     academic_year = models.CharField(
-        max_length=20,
-        help_text="Example: 2026/2027"
+        max_length=20
     )
 
     semester = models.CharField(
-        max_length=10,
-        choices=SEMESTER_CHOICES
+        max_length=30
     )
+
+    registration_date = models.DateField(
+    null=True,
+    blank=True
+)
 
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default="REGISTERED"
+        default="PENDING"
     )
 
-    registered_at = models.DateTimeField(
+    remarks = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    created_at = models.DateTimeField(
         auto_now_add=True
     )
 
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
+    def save(self, *args, **kwargs):
 
-    class Meta:
-        ordering = ["-registered_at"]
+        if not self.registration_no:
 
-        constraints = [
-            models.UniqueConstraint(
-                fields=[
-                    "student",
-                    "course",
-                    "academic_year",
-                    "semester",
-                ],
-                name="unique_student_course_registration"
+            year = self.registration_date.year
+
+            last = Registration.objects.filter(
+                registration_no__startswith=f"REG-{year}"
+            ).count() + 1
+
+            self.registration_no = (
+                f"REG-{year}-{last:04d}"
             )
-        ]
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return (
-            f"{self.student.student_id} - "
-            f"{self.course.code} - "
-            f"{self.academic_year}"
-        )
+        return self.registration_no

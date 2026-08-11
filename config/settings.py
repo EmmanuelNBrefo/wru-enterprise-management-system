@@ -47,6 +47,7 @@ INSTALLED_APPS = [
      'departments',
      'faculties',
      'programs',
+     "admissions",
      'courses',
      'students',
      'registrations',
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
      'grading',
      'gpa',
      "transcripts",
+
 ]
 
 

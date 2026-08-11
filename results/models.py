@@ -82,6 +82,6 @@ class Result(models.Model):
     def __str__(self):
 
         return (
-            f"{self.registration.student.student_id} - "
-            f"{self.registration.course.code}"
-        )
+        f"{self.registration.student.student_id} - "
+        f"{self.registration.registration_no}"
+    )
