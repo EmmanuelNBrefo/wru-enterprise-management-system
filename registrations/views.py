@@ -21,7 +21,8 @@ def registration_list(request):
 
         registrations = Registration.objects.select_related(
             "student",
-            "student__program"
+            "student__program",
+            "course"
         ).all()
 
         serializer = RegistrationSerializer(
@@ -41,12 +42,23 @@ def registration_list(request):
 
     if serializer.is_valid():
 
-        serializer.save()
+        try:
 
-        return Response(
-            serializer.data,
-            status=status.HTTP_201_CREATED
-        )
+            serializer.save()
+
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+
+        except Exception as error:
+
+            return Response(
+                {
+                    "error": str(error)
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
     return Response(
         serializer.errors,
@@ -72,7 +84,8 @@ def registration_detail(
 
         registration = Registration.objects.select_related(
             "student",
-            "student__program"
+            "student__program",
+            "course"
         ).get(
             registration_no=registration_no
         )
@@ -113,11 +126,22 @@ def registration_detail(
 
         if serializer.is_valid():
 
-            serializer.save()
+            try:
 
-            return Response(
-                serializer.data
-            )
+                serializer.save()
+
+                return Response(
+                    serializer.data
+                )
+
+            except Exception as error:
+
+                return Response(
+                    {
+                        "error": str(error)
+                    },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
         return Response(
             serializer.errors,

@@ -34,5 +34,7 @@ urlpatterns = [
     "api/registrations/",
     include("registrations.urls"),
 ),
+path("api/courses/", include("courses.urls")),
+
 
 ]

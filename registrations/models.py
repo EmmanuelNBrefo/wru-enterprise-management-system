@@ -1,7 +1,7 @@
 from django.db import models
 
 from students.models import Student
-
+from courses.models import Course
 
 class Registration(models.Model):
 
@@ -23,6 +23,12 @@ class Registration(models.Model):
         related_name="registrations"
     )
 
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.PROTECT,
+        related_name="registrations"
+    )
+
     academic_year = models.CharField(
         max_length=20
     )
@@ -32,9 +38,9 @@ class Registration(models.Model):
     )
 
     registration_date = models.DateField(
-    null=True,
-    blank=True
-)
+        null=True,
+        blank=True
+    )
 
     status = models.CharField(
         max_length=20,
@@ -51,11 +57,30 @@ class Registration(models.Model):
         auto_now_add=True
     )
 
+    class Meta:
+        ordering = ["-created_at"]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "student",
+                    "course",
+                    "academic_year",
+                    "semester",
+                ],
+                name="unique_student_course_registration",
+            )
+        ]
+
     def save(self, *args, **kwargs):
 
         if not self.registration_no:
 
-            year = self.registration_date.year
+            if self.registration_date:
+                year = self.registration_date.year
+            else:
+                from django.utils import timezone
+                year = timezone.now().year
 
             last = Registration.objects.filter(
                 registration_no__startswith=f"REG-{year}"

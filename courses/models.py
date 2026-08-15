@@ -1,4 +1,5 @@
 from django.db import models
+
 from departments.models import Department
 
 
@@ -55,12 +56,10 @@ class Course(models.Model):
         auto_now=True
     )
 
-
     class Meta:
         ordering = ["code"]
         verbose_name = "Course"
         verbose_name_plural = "Courses"
-
 
     def __str__(self):
         return f"{self.code} - {self.title}"
